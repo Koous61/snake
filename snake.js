@@ -1,10 +1,15 @@
 var GAME_SPEED = 1500;
-px = py = 10;
-gs = tc = 20;
-ax = ay = 15;
-xv = yv = 0;
-trail = [];
-tail = 5;
+var SNAKE_X = 10;
+var SNAKE_Y = 10;
+var gs = 20;
+var tc = 20;
+var POINT_X = 15;
+var POINT_Y = 15;
+var xv = 0;
+var yv = 0;
+var trail = [];
+var tail = 5;
+
 
 window.onload = function () {
     canv = document.getElementById("gc");
@@ -14,19 +19,19 @@ window.onload = function () {
 };
 
 function game() {
-    px += xv;
-    py += yv;
-    if (px < 0) {
-        px = tc - 1;
+    SNAKE_X += xv;
+    SNAKE_Y += yv;
+    if (SNAKE_X < 0) {
+        SNAKE_X = tc - 1;
     }
-    if (px > tc - 1) {
-        px = 0;
+    if (SNAKE_X > tc - 1) {
+        SNAKE_X = 0;
     }
-    if (py < 0) {
-        py = tc - 1;
+    if (SNAKE_Y < 0) {
+        SNAKE_Y = tc - 1;
     }
-    if (py > tc - 1) {
-        py = 0;
+    if (SNAKE_Y > tc - 1) {
+        SNAKE_Y = 0;
     }
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canv.width, canv.height);
@@ -34,22 +39,22 @@ function game() {
     ctx.fillStyle = "lime";
     for (var i = 0; i < trail.length; i++) {
         ctx.fillRect(trail[i].x * gs, trail[i].y * gs, gs - 2, gs - 2);
-        if (trail[i].x === px && trail[i].y === py) {
+        if (trail[i].x === SNAKE_X && trail[i].y === SNAKE_Y) {
             tail = 5;
         }
     }
-    trail.push({x: px, y: py});
+    trail.push({x: SNAKE_X, y: SNAKE_Y});
     while (trail.length > tail) {
         trail.shift();
     }
 
-    if (ax === px && ay === py) {
+    if (POINT_X === SNAKE_X && POINT_Y === SNAKE_Y) {
         tail++;
-        ax = Math.floor(Math.random() * tc);
-        ay = Math.floor(Math.random() * tc);
+        POINT_X = Math.floor(Math.random() * tc);
+        POINT_Y = Math.floor(Math.random() * tc);
     }
     ctx.fillStyle = "red";
-    ctx.fillRect(ax * gs, ay * gs, gs - 2, gs - 2);
+    ctx.fillRect(POINT_X * gs, POINT_Y * gs, gs - 2, gs - 2);
 }
 
 function keyPush(evt) {
